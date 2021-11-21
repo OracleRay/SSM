@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+<!--空参实例化-->
+<bean id="UserDao" class="dao.Impl.UserDaoImpl" scope="singleton" init-method="init" destroy-method="destroy">
+    <property name="username" value="zhangsan" />
+    <property name="age" value="18" />
+    <property name="list">
+        <list>
+            <value>aaa</value>
+            <value>bbb</value>
+            <value>ccc</value>
+        </list>
+    </property>
+    <property name="map">
+        <map>
+            <entry key="user1" value-ref="user1" />
+            <entry key="user2" value-ref="user2" />
+        </map>
+    </property>
+    <property name="properties">
+        <props>
+            <prop key="p1">1</prop>
+            <prop key="p2">2</prop>
+            <prop key="p3">3</prop>
+        </props>
+    </property>
+</bean>
+    <bean id="user1" class="domain.User">
+        <property name="username" value="zhangsan" />
+        <property name="gender" value="男" />
+    </bean>
+    <bean id="user2" class="domain.User">
+        <property name="username" value="lisi" />
+        <property name="gender" value="女" />
+    </bean>
+<!--  导入其他配置文件  -->
+    <import resource="applicationContext-datasource.xml" />      <!-- 数据源开发 -->
+    <import resource="applicationContext-annotation.xml" />      <!-- 注解开发 -->
+<!--  set方法依赖注入  -->
+    <!--<bean id="UserService" class="service.impl.UserServiceImpl">
+        <property name="dao" ref="UserDao"></property>
+    </bean>-->
+<!--  p标签依赖注入  -->
+    <!--<bean id="UserService" class="service.impl.UserServiceImpl" p:dao-ref="UserDao"/>-->
+<!--构造方法注入-->
+    <!--<bean id="UserService" class="service.impl.UserServiceImpl">
+        <constructor-arg name="dao" ref="UserDao"></constructor-arg>
+    </bean>-->
+   <!--
+    1）当scope的取值为singleton时(默认)
+    Bean的实例化个数：1个
+    Bean的实例化时机：当Spring核心文件被加载时，实例化配置的Bean实例
+    Bean的生命周期：
+     对象创建：当应用加载，创建容器时，对象就被创建了
+     对象运行：只要容器在，对象一直活着
+     对象销毁：当应用卸载，销毁容器时，对象就被销毁了
+    2）当scope的取值为prototype时
+    Bean的实例化个数：多个
+    Bean的实例化时机：当调用getBean()方法时实例化Bean
+     对象创建：当使用对象时，创建新的对象实例
+     对象运行：只要对象在使用中，就一直活着
+     对象销毁：当对象长时间不用时，被 Java 的垃圾回收器回收了
+    -->
+<!--  静态工厂实例化  -->
+    <!--<bean id="userDao" class="factory.StaticFactory" factory-method="getUserDao"></bean>-->
+<!--  动态工厂实例化  -->
+<!--
+<bean id="factory" class="factory.DynamicFactory"></bean>
+<bean id="userDao" factory-bean="factory" factory-method="getUserDao"></bean>
+-->
+</beans>

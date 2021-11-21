@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+">
+    <!--&lt;!&ndash;目标对象&ndash;&gt;
+    <bean id="target" class="aop.Target"/>
+    &lt;!&ndash;切面对象&ndash;&gt;
+    <bean id="myAspect" class="aop.MyAspect"/>
+    &lt;!&ndash;配置织入&ndash;&gt;
+    <aop:config>
+        &lt;!&ndash;声明切面&ndash;&gt;
+        <aop:aspect ref="myAspect">
+            <aop:pointcut id="myPointCut" expression="execution(* aop.*.*(..))"/>
+            &lt;!&ndash;切面：切点+通知&ndash;&gt;
+            <aop:before method="before" pointcut-ref="myPointCut"/>
+            &lt;!&ndash;<aop:after method="afterReturning" pointcut="execution(public void aop.Target.save())"/>&ndash;&gt;
+            <aop:after-returning method="afterReturning" pointcut-ref="myPointCut"/>
+        </aop:aspect>
+    </aop:config>-->
+    <!--注解配置-->
+    <context:component-scan base-package="aop"/>
+    <!--aop自动代理-->
+    <aop:aspectj-autoproxy/>
+    <!--事务控制配置-->
+    <import resource="txContext.xml"/>
+    <!--jdbc加载-->
+    <import resource="jdbcContext.xml"/>
+</beans>

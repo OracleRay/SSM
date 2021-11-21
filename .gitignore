@@ -1,0 +1,8 @@
+# Project exclude paths
+/MyBatis/target/
+/out/
+/Spring/target/
+/SpringAop/target/
+/SpringJDBC/target/
+/SpringMVC/target/
+/°¸Àý/target/
